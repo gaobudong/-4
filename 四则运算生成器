@@ -1,0 +1,599 @@
+#include<stdio.h>
+#include<string.h>
+#include<time.h>
+#include<stdlib.h>
+#include<windows.h>
+#include<iostream>
+#include<math.h>
+int max, n, fuhao, xiaoshu, shuchu, kuohao, file, chongzhi;
+FILE* p;
+void zhengshuyunsuandaan(int x[])
+{
+	int i;
+	if (shuchu == 1)      //输出到文件
+	{
+		printf("\n正确答案：\n");
+		for (i = 1; i < n + 1; i++)
+			printf("(%d) %d\n", i, x[i]);
+	}
+	else         //输出到屏幕
+	{
+		fprintf(p, "\n正确答案：\n");
+		for (i = 1; i < n + 1; i++)
+			fprintf(p, "(%d) %d\n", i, x[i]);
+	}
+}
+void xiaoshuyunsuandaan(double y[])     //小数运算答案
+{
+	int i;
+	if (shuchu == 1)
+	{
+		printf("\n正确答案：\n");
+		for (i = 1; i < n + 1; i++)
+			printf("(%d) %.2f\n", i, y[i]);
+	}
+	else
+	{
+		fprintf(p, "\n正确答案：\n");
+		for (i = 1; i < n + 1; i++)
+			fprintf(p, "(%d) %.2f\n", i, y[i]);
+	}
+}
+void zhengshuyunsuan()
+{
+	int i, j, m, k, shuliang;
+	int daan[10];
+	int  jiafa[10], jianfa[10], chengfa[10] = { 0 }, chufa[10] = { 0 };
+	int b = 0;
+	for (j = 1; j <= n; j++)
+	{
+		b = 0;
+		if (fuhao == 1)
+		{
+			while (1)
+			{
+				shuliang = rand() % 7;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+
+				jiafa[i] = rand() % max;
+			}
+			for (k = 0; k < shuliang; k++)
+			{
+				b = b + jiafa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+			{
+				printf("%d", jiafa[0]);
+				for (m = 1; m < shuliang; m++)
+					printf("+%d", jiafa[m]);
+				printf("=\n");
+			}
+			else
+			{
+				fprintf(p, "%d", jiafa[0]);
+				for (m = 1; m < shuliang; m++)
+					fprintf(p, "+%d", jiafa[m]);
+				fprintf(p, "=\n");
+			}
+
+		}
+		else if (fuhao == 2)
+		{
+			while (1)
+			{
+				shuliang = rand() % 7;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+
+				jianfa[i] = rand() % max;
+			}
+			b = jianfa[0];
+			for (k = 1; k < shuliang; k++)
+			{
+				b = b - jianfa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+			{
+				printf("%d", jianfa[0]);
+				for (m = 1; m < shuliang; m++)
+					printf("-%d", jianfa[m]);
+				printf("=\n");
+			}
+			else
+			{
+				fprintf(p, "%d", jianfa[0]);
+				for (m = 1; m < shuliang; m++)
+					fprintf(p, "-%d", jianfa[m]);
+				fprintf(p, "=\n");
+			}
+		}
+		else if (fuhao == 3)
+		{
+			while (1)
+			{
+				shuliang = rand() % 4;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+				chengfa[i] = rand() % max;
+				if (chengfa[i] == 0)
+					i = i - 1;
+			}
+			b = chengfa[0];
+			for (k = 1; k < shuliang; k++)
+			{
+				b = b * chengfa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+			{
+				printf("%d", chengfa[0]);
+				for (m = 1; m < shuliang; m++)
+					printf("*%d", chengfa[m]);
+				printf("=\n");
+			}
+			else
+			{
+				fprintf(p, "%d", chengfa[0]);
+				for (m = 1; m < shuliang; m++)
+					fprintf(p, "*%d", chengfa[m]);
+				fprintf(p, "=\n");
+			}
+		}
+		else if (fuhao == 4)
+		{
+
+			while (1)
+			{
+				shuliang = rand() % 5;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+				chufa[i] = rand() % max;
+				if (chufa[i] == 0)
+					i = i - 1;
+			}
+			b = chufa[0];
+			for (k = 1; k < shuliang; k++)
+			{
+				b = b / chufa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+				if (shuchu == 1)
+				{
+					printf("%d", chufa[0]);
+					for (m = 1; m < shuliang; m++)
+						printf("/%d", chufa[m]);
+					printf("=\n");
+				}
+				else
+				{
+					fprintf(p, "%d", chufa[0]);
+					for (m = 1; m < shuliang; m++)
+						fprintf(p, "/%d", chufa[m]);
+					fprintf(p, "=\n");
+				}
+		}
+	}
+	zhengshuyunsuandaan(daan);
+}
+void xiaoshuyunsuan()
+{
+	int i, j, m, k, shuliang;
+	double jiafa[10];
+	double jianfa[10];
+	double chengfa[10];
+	double chufa[10];
+	char yunsuanshi[10];
+	double daan[100];
+	double b;
+	for (j = 1; j <= n; j++)
+	{
+		b = 0;
+		if (fuhao == 1)
+		{
+			while (1)
+			{
+				shuliang = rand() % 7;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+
+				jiafa[i] = (rand() % (max * 100)) / 100.00;
+			}
+			for (k = 0; k < shuliang; k++)
+			{
+				b = b + jiafa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+			{
+				printf("%.2f", jiafa[0]);
+				for (m = 1; m < shuliang; m++)
+					printf("+%.2f", jiafa[m]);
+				printf("=\n");
+			}
+			else
+			{
+				fprintf(p, "%.2f", jiafa[0]);
+				for (m = 1; m < shuliang; m++)
+					fprintf(p, "+%.2f", jiafa[m]);
+				fprintf(p, "=\n");
+			}
+		}
+		else if (fuhao == 2)
+		{
+			while (1)
+			{
+				shuliang = rand() % 7;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+
+				jianfa[i] = rand() % (max * 100) / 100.00;
+			}
+			b = jianfa[0];
+			for (k = 1; k < shuliang; k++)
+			{
+				b = b - jianfa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+			{
+				printf("%.2f", jianfa[0]);
+				for (m = 1; m < shuliang; m++)
+					printf("-%.2f", jianfa[m]);
+				printf("=\n");
+			}
+			else
+			{
+				fprintf(p, "%.2f", jianfa[0]);
+				for (m = 1; m < shuliang; m++)
+					fprintf(p, "-%.2f", jianfa[m]);
+				fprintf(p, "=\n");
+			}
+		}
+		else if (fuhao == 3)
+		{
+			while (1)
+			{
+				shuliang = rand() % 4;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+				chengfa[i] = rand() % (max * 100) / 100.00;
+			}
+			b = chengfa[0];
+			for (k = 1; k < shuliang; k++)
+			{
+				b = b * chengfa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+			{
+				printf("%.2f", chengfa[0]);
+				for (m = 1; m < shuliang; m++)
+					printf("*%.2f", chengfa[m]);
+				printf("=\n");
+			}
+			else
+			{
+				fprintf(p, "%.2f", chengfa[0]);
+				for (m = 1; m < shuliang; m++)
+					fprintf(p, "*%.2f", chengfa[m]);
+				fprintf(p, "=\n");
+			}
+		}
+		else if (fuhao == 4)
+		{
+			while (1)
+			{
+				shuliang = rand() % 2;
+				if (shuliang != 1 && shuliang != 0)
+					break;
+			}
+			for (i = 0; i < shuliang; i++)
+			{
+				chufa[i] = rand() % (max * 100) / 100.00;
+			}
+			b = chufa[0];
+			for (k = 1; k < shuliang; k++)
+			{
+				b = b / chufa[k];
+			}
+			daan[j] = b;
+			if (shuchu == 1)
+				if (shuchu == 1)
+				{
+					printf("%.2f", chufa[0]);
+					for (m = 1; m < shuliang; m++)
+						printf("/%.2f", chufa[m]);
+					printf("=\n");
+				}
+				else
+				{
+					fprintf(p, "%.2f", chufa[0]);
+					for (m = 1; m < shuliang; m++)
+						fprintf(p, "/%.2f", chufa[m]);
+					fprintf(p, "=\n");
+				}
+		}
+	}
+	xiaoshuyunsuandaan(daan);
+}
+void mixDecimals()  //混合运算（小数）
+{
+	int i, k;
+	double x[100], a, b, c;
+	for (k = 1; k < n + 1; k++)
+	{
+		a = rand() % (max * 100) / 100.00 + 1;
+		b = rand() % (max * 100) / 100.00 + 1;
+		c = rand() % (max * 100) / 100.00 + 1;
+		i = rand() % 3;
+		if (i == 0)    //  a-b*c,(a-b)*c
+		{
+			if (kuohao == 1)   //有括号
+				x[k] = (a + b) * c;
+			else
+				x[k] = a - b * c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %.2f+%.2f*%.2f=\n", i, a, b, c);
+				else
+					printf("(%d) (%.2f-%.2f)*%.2f=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %.2f+%.2f*%.2f=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%.2f-%.2f)*%.2f=\n", i, a, b, c);
+			}
+		}
+		else if (i == 1)    //a+b/c,(a+b)/c
+		{
+			while (b == 0)
+			{
+				c = rand() % (max * 100) / 100.00 + 1;
+			}
+			if (kuohao == 2)
+				x[k] = a - b / c;
+			else
+				x[k] = (a + b) / c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %.2f-%.2f/%.2f=\n", i, a, b, c);
+				else
+					printf("(%d) (%.2f+%.2f)/%.2f=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %.2f-%.2f/%.2f=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%.2f+%.2f)/%.2f=\n", i, a, b, c);
+			}
+		}
+		else if (i == 2)    //a-b/c,(a-b)/c
+		{
+			while (b == 0)
+			{
+				b = rand() % (max * 100) / 100.00 + 1;
+			}
+			if (kuohao == 2)
+				x[k] = a + b / c;
+			else
+				x[k] = (a - b) / c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %.2f+%.2f/%.2f=\n", i, a, b, c);
+				else
+					printf("(%d) (%.2f-%.2f)/%.2f=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %.2f+%.2f*%.2f=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%.2f-%.2f)*%.2f=\n", i, a, b, c);
+			}
+		}
+		else   //a+b*c,(a+b)*c
+		{
+			if (kuohao == 2)
+				x[k] = a + b * c;
+			else
+				x[k] = (a - b) * c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %.2f+%.2f*%.2f=\n", i, a, b, c);
+				else
+					printf("(%d) (%.2f-%.2f)*%.2f=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %.2f+%.2f*%.2f=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%.2f-%.2f)*%.2f=\n", i, a, b, c);
+			}
+		}
+	}
+	xiaoshuyunsuandaan(x);   //获取答案
+}
+void  hunheyunsuan1()  //混合运算（整数）
+{
+	int i, k, a, b, c;
+	int x[100];
+	for (k = 1; k < n + 1; k++)
+	{
+		a = rand() % max;
+		b = rand() % max;
+		c = rand() % max;
+		i = rand() % 3;
+		if (i == 0)    //  a-b*c,(a-b)*c
+		{
+			if (kuohao == 2)   //有括号
+				x[k] = a - b * c;
+			else
+				x[k] = (a + b) * c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %d-%d*%d=\n", i, a, b, c);
+				else
+					printf("(%d) (%d+%d)*%d=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %d+%d*%d=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%d-%d)*%d=\n", i, a, b, c);
+			}
+		}
+		else if (i == 1)    //a+b/c,(a+b)/c
+		{
+			while (b == 0)
+			{
+				c = rand() % (max * 100) / 100.00 + 1;
+			}
+			if (kuohao == 2)
+				x[k] = a - b / c;
+			else
+				x[k] = (a + b) / c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %d-%d/%d=\n", i, a, b, c);
+				else
+					printf("(%d) (%d+%d)/%d=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %d-%d/%d=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%d+%d)/%d=\n", i, a, b, c);
+			}
+		}
+		else if (i == 2)    //a-b/c,(a-b)/c
+		{
+			while (b == 0)
+			{
+				b = rand() % (max * 100) / 100.00 + 1;
+			}
+			if (kuohao == 2)
+				x[k] = a + b / c;
+			else
+				x[k] = (a - b) / c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %d+%d/%d=\n", i, a, b, c);
+				else
+					printf("(%d) (%d-%d)/%d=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %d+%d*%d=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%d-%d)*%d=\n", i, a, b, c);
+			}
+		}
+		else   //a+b*c,(a+b)*c
+		{
+			if (kuohao == 2)
+				x[k] = a + b * c;
+			else
+				x[k] = (a - b) * c;
+			if (shuchu == 1)
+			{
+				if (kuohao == 2)
+					printf("(%d) %d+%d*%d=\n", i, a, b, c);
+				else
+					printf("(%d) (%d-%d)*%d=\n", i, a, b, c);
+			}
+			else
+			{
+				if (kuohao == 2)
+					fprintf(p, "(%d) %d+%d*%d=\n", i, a, b, c);
+				else
+					fprintf(p, "(%d) (%d-%d)*%d=\n", i, a, b, c);
+			}
+		}
+	}
+	zhengshuyunsuandaan(x);   //获取答案
+}
+int main()
+{
+	fopen_s(&p, "结对编程.txt", "w");
+	printf("***********四则运算**************\n");
+	printf("1.请设置题目数量:");
+	scanf_s("%d", &n);
+	printf("\n2.请选择运算符号(1.加法  2.减法  3.乘法  4.除法  5.混合运算)：");
+	scanf_s("%d", &fuhao);
+	if (fuhao == 5)
+	{
+		printf("\n是否有括号(1.有 2.没有):");
+		scanf_s("%d", &kuohao);
+	}
+	printf("\n3.请设置最大数：");
+	scanf_s("%d", &max);
+	printf("\n4.是否有小数(1.有  2.没有)：");
+	scanf_s("%d", &xiaoshu);
+	printf("\n5.选择输出方式(1.显示在屏幕上 2.生成文件):");
+	scanf_s("%d", &shuchu);
+	if (shuchu == 2)
+		printf("\n已生成四则运算.txt文件");
+	//p = fopen_s("四则运算.txt", "w");
+	printf("\n\n");
+	if (fuhao != 5)
+	{
+		if (xiaoshu == 2)
+			zhengshuyunsuan();
+		else
+			xiaoshuyunsuan();
+	}
+	else
+	{
+		if (xiaoshu == 2)
+			hunheyunsuan1();  //混合运算（无小数、有无括号）
+		else
+			mixDecimals(); //混合运算（有小数、有无括号）
+	}
+	fclose(p);
+	printf("\n是否重新运行该程序?   <1>是   <2>退出\n");
+	scanf_s("%d", &chongzhi);
+	if (chongzhi == 1)
+	{
+		system("cls");  //清屏，重新运行
+		main();
+	}
+}
